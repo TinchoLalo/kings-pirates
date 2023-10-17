@@ -23,3 +23,15 @@ class Text():
 
     def change_color(self,new_color):
         self.color = new_color
+
+class Button(Text):
+    def __init__(self, text="", x=0, y=0, color="white", size=20, font='freesansbold.ttf', button_color=(0, 255, 0)):
+        super().__init__(text, x, y, color, size, font)
+        self.button_color = button_color
+
+    def draw(self):
+        self.text = self.font.render(self.text, True, self.color)
+        self.textRect = self.text.get_rect()
+        self.textRect.center = (self.x, self.y)
+        pygame.draw.rect(settings.window, self.button_color, (self.x - 60, self.y - 25, 120, 50))
+        self.print()

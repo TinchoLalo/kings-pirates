@@ -1,6 +1,6 @@
 import pygame
 import settings
-from text import Text
+from text import Text, Button
 from background import get_background
 
 
@@ -17,6 +17,14 @@ class Menu():
         while not self.run:
             clock.tick(settings.FPS)
 
+            for tile in background:
+                settings.window.blit(bg_image, tile)
+                
+            Text("MOAIS", settings.WIDTH//2, settings.HEIGHT//3, "white", 80)
+            Text("the lost secrets", settings.WIDTH//2, (settings.HEIGHT//3)+50, "white", 30)
+            
+            start_button = Button("EMPEZAR (A o Space)", settings.WIDTH//2, (settings.HEIGHT//3) + 130, "white", 20)
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.run = False
@@ -26,6 +34,10 @@ class Menu():
                     if event.key == pygame.K_ESCAPE:
                         self.run = False
                         break
+
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if start_button.textRect.collidepoint(event.pos):
+                        self.run = True
 
                 # Joystick
                 if event.type == pygame.JOYDEVICEADDED:
@@ -39,10 +51,5 @@ class Menu():
 
             if keys[pygame.K_SPACE]: self.run = True
 
-            for tile in background:
-                settings.window.blit(bg_image, tile)
-
-            Text("MOAIS", settings.WIDTH//2, settings.HEIGHT//3, "white", 80)
-            Text("the lost secrets", settings.WIDTH//2, (settings.HEIGHT//3)+50, "white", 30)
-            Text("Presione Space o A para empezar", settings.WIDTH//2, (settings.HEIGHT//3) + 130, "white", 20)
+            
             pygame.display.update()
