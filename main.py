@@ -50,7 +50,7 @@ def main(window, menu):
     # CREATE MAP
 
     # Leer el archivo de texto
-    with open("levels.txt", "r") as file:
+    with open("levels/level0.txt", "r") as file:
         level_map = file.readlines()
 
     for row_index, row in enumerate(level_map):

@@ -42,6 +42,7 @@ class Menu():
             for tile in background:
                 settings.window.blit(bg_image, tile)
 
-            Text("LEONIDAS", settings.WIDTH//2, settings.HEIGHT//3, "white", 50)
-            Text("Presione Space o A para empezar", settings.WIDTH//2, (settings.HEIGHT//3) + 120, "white", 20)
+            Text("MOAIS", settings.WIDTH//2, settings.HEIGHT//3, "white", 80)
+            Text("the lost secrets", settings.WIDTH//2, (settings.HEIGHT//3)+50, "white", 30)
+            Text("Presione Space o A para empezar", settings.WIDTH//2, (settings.HEIGHT//3) + 130, "white", 20)
             pygame.display.update()

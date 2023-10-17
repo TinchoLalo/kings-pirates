@@ -1,5 +1,7 @@
 import pygame
 import settings
+import sys
+
 class Text():
     def __init__(self, text="", x=0, y=0, color="white", size=20, font='freesansbold.ttf'):
         self.font = pygame.font.Font('freesansbold.ttf', size)
