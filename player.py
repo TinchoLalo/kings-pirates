@@ -104,7 +104,7 @@ class Player(pygame.sprite.Sprite):
             axis_x = joystick.get_axis(0)
             axis_y = joystick.get_axis(1)
 
-            if joystick.get_button(0) and self.land:
+            if joystick.get_button(5) and self.land:
                 self.SPEED = 10
             else:
                 self.SPEED = 5
@@ -115,7 +115,7 @@ class Player(pygame.sprite.Sprite):
             if keys[pygame.K_RIGHT] and not collide_right or axis_x > 0.5 and not collide_right:
                 self.move_right(self.SPEED)
 
-            if keys[pygame.K_SPACE] and self.jump_count < 1 and self.land  or joystick.get_button(2) and self.jump_count < 1 and self.land:
+            if keys[pygame.K_SPACE] and self.jump_count < 1 and self.land  or joystick.get_button(0) and self.jump_count < 1 and self.land:
                 self.jump()
 
         vertical_collide = self.handle_vertical_collision(objects, self.y_vel)

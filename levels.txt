@@ -1,13 +1,28 @@
-XXXXXXXXXXXXXXXXXXXXXXX
-X              .
-X .                     .
-X   
-X           .                        XXXXXXXX
-XXXXXXX                    .       XX    XXX
-X    .           XXXXXXXXX       .    XXXXXX                 
-X               X        X
-X   P           XXXXXXXXX
-X          .                 .
-X
-X  .
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                    .                         .
+                            .
+   .             .                                 .                  .
+     X
+     X           XXXXXXXXXXXXXXXXXXXXXXX
+     X XX        X  XX    X X    .      X                         .
+   XX.X          X .                     .
+  X  XX           X   
+   XXX          XX      .             P                XXXXXXXX
+XXXXXXXX    XXXXXXX                    .             XX    XXX  X
+  .          .    X    .         XXXXXXXXX           .     X XXXXXX                 .
+                X               X        XX                X
+                X                XXXXXXXXX
+                X          .      X    XX       .                      .
+                X                                                                                   .
+                XX
+                X                                                                          XXXX         
+                X                                  XXXXXX        XXXXXXXXX    XXXXX   XXXXXXXXXXXX          
+ XXXXXX  .       X                            XXXXX            XX     .         XX    X  XX X    X
+                X  .                          X         XXXXXXXXXXXXX            X
+                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX          .X
+.       .        X      XX  X             X  X
+                     .
+
+
+
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX

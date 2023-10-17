@@ -43,7 +43,7 @@ def main(window):
     clock = pygame.time.Clock()
     background, bg_image = get_background("Blue.png")
 
-    block_size = 30
+    block_size = 20
     
     blocks = []
     fires = []
