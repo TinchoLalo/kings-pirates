@@ -5,6 +5,8 @@ import pygame
 
 # SCRIPTS
 import settings
+from menu import Menu
+from text import Text
 from player import Player
 from background import get_background
 from objects import Block
@@ -16,6 +18,7 @@ from enemies import Fire
 pygame.init()
 
 pygame.display.set_caption("MOAIS")
+menu = Menu()
 
 # DRAW IN SCREEN
 def draw(window, background, bg_image, player, objects, offset_x, offset_y):
@@ -25,12 +28,7 @@ def draw(window, background, bg_image, player, objects, offset_x, offset_y):
     for obj in objects:
         obj.draw(window, offset_x, offset_y)
 
-    # TEXT
-    font = pygame.font.Font('freesansbold.ttf', 20)
-    text2 = font.render(player.message, True, (0, 0, 0))
-    textRect2 = text2.get_rect()
-    textRect2.center = (settings.WIDTH // 2, 80)
-    settings.window.blit(text2, textRect2)
+    Text("LEONIDAS", settings.WIDTH//2, 80)
 
     player.draw(window, offset_x, offset_y)
 
@@ -39,10 +37,10 @@ def draw(window, background, bg_image, player, objects, offset_x, offset_y):
 
 
 
-def main(window):
+def main(window, menu):
     clock = pygame.time.Clock()
     background, bg_image = get_background("Blue.png")
-
+    menu.start()
     block_size = 20
     
     blocks = []
@@ -84,8 +82,7 @@ def main(window):
     scroll_area_height = 200
     init = True
     
-    run = True
-    while run:
+    while menu.run:
         clock.tick(settings.FPS)
 
         for event in pygame.event.get():
@@ -95,7 +92,7 @@ def main(window):
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    run = False
+                    menu.run = False
                     break
             
             # Joystick
@@ -131,5 +128,6 @@ def main(window):
     quit()
 
 
+
 if __name__ == "__main__":
-    main(settings.window)
+    main(settings.window, menu)
