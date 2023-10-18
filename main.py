@@ -17,23 +17,26 @@ from enemies import Fire
 # INIT PYGAME
 pygame.init()
 
-pygame.display.set_caption("MOAIS")
+pygame.display.set_caption("MOAIS") 
 menu = Menu()
 
 # DRAW IN SCREEN
-def draw(window, background, bg_image, player, objects, offset_x, offset_y):
+def draw(window, background, bg_image, player, objects, points,offset_x, offset_y):
     for tile in background:
         window.blit(bg_image, tile)
 
     for obj in objects:
         obj.draw(window, offset_x, offset_y)
 
+    for point in points:
+        point.draw(window,offset_x, offset_y) 
+   
+
     Text("MOAIS", settings.WIDTH//2, 80)
 
     player.draw(window, offset_x, offset_y)
 
     pygame.display.update()
-
 
 
 
@@ -50,29 +53,36 @@ def main(window, menu):
     # CREATE MAP
 
     # Leer el archivo de texto
-    with open("levels/level0.txt", "r") as file:
+    with open("levels/level1.txt", "r") as file:
         level_map = file.readlines()
 
     for row_index, row in enumerate(level_map):
         for col_index, cell in enumerate(row):
             x = col_index 
             y =  row_index 
+    
+
             if cell == 'P':
                 player = Player(x* block_size, y* block_size, 50, 50)
-            if cell == 'X':
+
+            if cell == 'x':
                 block = Block(x* block_size, y* block_size, block_size)
                 blocks.append(block)
 
             if cell == '.':
-                point = Block(x* block_size, y* block_size, 5, "#f9f9f9", "point")
+                point = Block(x* block_size, y* block_size, 5, "point", "#f9f9f9")
                 points.append(point)
-            
+
+            if cell == '#':
+                tree = Block(x* block_size, y* block_size, block_size, "tree")
+                blocks.append(tree)
+                
             if cell == 'f':
                 fire = Fire(x*block_size+30, y*block_size+32, 16, 32)
                 fires.append(Fire(x*block_size+30, y*block_size+32, 16, 32))
  
     
-    objects = [*blocks, *fires, *points]
+    objects = [*blocks, *fires]
     for i in fires:
         i.on()
 
@@ -80,7 +90,7 @@ def main(window, menu):
     offset_y = 0
     scroll_area_width = 200
     scroll_area_height = 200
-    init = True
+    init = False
     
     while menu.run:
         clock.tick(settings.FPS)
@@ -123,7 +133,7 @@ def main(window, menu):
             offset_y += player.y_vel
         
         # Llama a la función draw con la vista de la cámara actualizada
-        draw(window, background, bg_image, player, objects, offset_x, offset_y)
+        draw(window, background, bg_image, player, objects, points, offset_x, offset_y)
        
     quit()
 

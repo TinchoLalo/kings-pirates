@@ -6,21 +6,49 @@
      X XX        X  XX    X X    .      X                         .
    XX.X          X .                     .
   X  XX           X     
-   XXX          XX      .                             XXXXXXXX
-XXXXXXXX    XXXXXXX                    .             XX    XXX  X
-  .          .    X    .         XXXXXXXXX           .     X XXXXXX                 .
-                X               X        XX                X
-                X                XXXXXXXXX
-                X          .      X    XX       .                      .
-                X                    P                                                               .
-                XX                                                
-                X                                      XXXXXXXX                                    XXXX                                 XXXX    XXXX
-                X                                  XXXXXX    X    XXXXXXXXX    XXXXX   XXXXXXXXXXXX                      XXX    X
- XXXXXX  .       X                            XXXXX            XX     .         XX    X  XX X    X
-                X  .                          X         XXXXXXXXXXXXX            X
-                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX          .X
+   XXX          XX      .                                                        XXXXXXXX
+XXXXXXXX    XXXXXXX                    .                                         XX    XXX  X
+  .          .    X    .         XXXXXXXXX           .                             X XXXXXX                 .
+                X               X        XX                                        X                        ######
+                X                XXXXXXXXX                                                                  ######
+                X          .      X    XX       .                                                           ######             .
+                X                    P                                                                        ## 
+                X                                                                                             #                                          .
+                XX                                                                                   XXXXXXXXXXXXXX
+                XXXXXX                                                                          XXXXXXXXXXXXXXXXXX
+                                                                                                       XX  XX        X
+                
+
+                                                        
+                XXXXXXX                                                           XXXXXXXXXX                                    XXXX                                 XXXX    XXXX
+                X  XXXXX                                                       XXXXXXXXX    X    XXXXXXXXX    XXXXX   XXXXXXXXXXXX                      XXX    X
+ XXXXXX  .       X                              XXXXXXXXXXXXX        XXXXXX     .         XX    X  XX X    X
+                X  .                            XXXXXXXXXXXXXX            X
+
+
+
+
+                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                           XXXXX
+                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX         .                              XXXXXXXXXXXXXXX
 .       .        X      XX  X             X  X
                      .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -7,8 +7,8 @@ from load_sprite import load_sprite_sheets
 class Player(pygame.sprite.Sprite):
     COLOR = (255, 0, 0)
     GRAVITY = 1
-    SPRITES = load_sprite_sheets("MainCharacters", "MaskDude", 32, 32, True)
-    ANIMATION_DELAY = 3
+    SPRITES = load_sprite_sheets("MainCharacters", "MaskDude", 40, 48, True)
+    ANIMATION_DELAY = 5
     SPEED = 5
 
     def __init__(self, x, y, width, height):
@@ -18,7 +18,7 @@ class Player(pygame.sprite.Sprite):
         self.y_vel = 0
         self.mask = None
         self.direction = "left"
-        self.animation_count = 0
+        self.animation_count = 1
         self.fall_count = 0
         self.jump_count = 0
         self.hit = False
@@ -33,7 +33,7 @@ class Player(pygame.sprite.Sprite):
     def jump(self):
         self.land = False
         self.y_vel = -self.GRAVITY * 4
-        self.animation_count = 0
+        self.animation_count = 1
         self.jump_count = 1
         if self.jump_count == 1:
             self.fall_count = 0
@@ -53,13 +53,13 @@ class Player(pygame.sprite.Sprite):
         self.x_vel = -vel
         if self.direction != "left":
             self.direction = "left"
-            self.animation_count = 0
+            self.animation_count = 1
 
     def move_right(self, vel):
         self.x_vel = vel
         if self.direction != "right":
             self.direction = "right"
-            self.animation_count = 0
+            self.animation_count = 1
     
     def landed(self):
         self.fall_count = 0
@@ -72,7 +72,7 @@ class Player(pygame.sprite.Sprite):
         collided_objects = []
        
         for obj in objects:
-            if pygame.sprite.collide_mask(self, obj) and obj.name != "point":
+            if pygame.sprite.collide_mask(self, obj) and obj.name != "fire" and obj.name != "tree":
                 if self.y_vel > 0:
                     self.rect.bottom = obj.rect.top
                     self.landed()
@@ -87,7 +87,7 @@ class Player(pygame.sprite.Sprite):
         self.move(dx, self.y_vel/2)
         collided_object = None
         for obj in objects:
-            if pygame.sprite.collide_mask(self, obj) and obj.name != "point":
+            if pygame.sprite.collide_mask(self, obj) and obj.name != "fire" and obj.name != "tree":
                 collided_object = obj
                 break
           
@@ -171,9 +171,12 @@ class Player(pygame.sprite.Sprite):
 
         sprite_sheet_name = self.sprite_sheet + "_" + self.direction
         sprites = self.SPRITES[sprite_sheet_name]
-        sprite_index = (self.animation_count //
-                        self.ANIMATION_DELAY) % len(sprites)
-        self.sprite = sprites[sprite_index]
+        if self.ANIMATION_DELAY != 0 and self.animation_count != 0 and  len(sprites) != 0:
+            sprite_index = (self.animation_count // self.ANIMATION_DELAY) % len(sprites)
+            self.sprite = sprites[sprite_index]
+        else:
+            sprite_index = 0  # Otra acción predeterminada en caso de que ANIMATION_DELAY sea 0
+       
         self.animation_count += 1
         self.update()
 

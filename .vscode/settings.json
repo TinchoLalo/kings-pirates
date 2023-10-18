@@ -1,0 +1,8 @@
+{
+    "editor.insertSpaces": true,
+    "editor.comments.insertSpace": true,
+    "editor.trimAutoWhitespace": true,
+    "editor.suggest.insertMode": "insert",
+    "editor.useTabStops": true,
+    "editor.find.autoFindInSelection": "never"
+}

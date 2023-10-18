@@ -3,6 +3,7 @@ import settings
 from text import Text, Button
 from player import Player
 from background import get_background
+from enemies import Fire
 from objects import Block
 
 # DRAW IN SCREEN
@@ -57,7 +58,7 @@ class Menu():
                     blocks.append(block)
 
                 if cell == '.':
-                    point = Block(x* block_size, y* block_size, 5, "#f9f9f9", "point")
+                    point = Block(x* block_size, y* block_size, 5, "point", "#f9f9f9")
                     points.append(point)
                 
                 if cell == 'f':
