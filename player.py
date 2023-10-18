@@ -76,7 +76,7 @@ class Player(pygame.sprite.Sprite):
                 if self.y_vel > 0:
                     self.rect.bottom = obj.rect.top
                     self.landed()
-                if self.y_vel < 0 and not self.land and self.rect.bottom != obj.rect.top:
+                if self.y_vel < 2 and not self.land and self.rect.bottom != obj.rect.top:
                     self.rect.top = obj.rect.bottom 
                     self.hit_head()
             

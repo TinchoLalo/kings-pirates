@@ -30,8 +30,4 @@ class Button(Text):
         self.button_color = button_color
 
     def draw(self):
-        self.text = self.font.render(self.text, True, self.color)
-        self.textRect = self.text.get_rect()
-        self.textRect.center = (self.x, self.y)
-        pygame.draw.rect(settings.window, self.button_color, (self.x - 60, self.y - 25, 120, 50))
         self.print()

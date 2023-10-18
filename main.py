@@ -28,7 +28,7 @@ def draw(window, background, bg_image, player, objects, offset_x, offset_y):
     for obj in objects:
         obj.draw(window, offset_x, offset_y)
 
-    Text("LEONIDAS", settings.WIDTH//2, 80)
+    Text("MOAIS", settings.WIDTH//2, 80)
 
     player.draw(window, offset_x, offset_y)
 
@@ -126,8 +126,6 @@ def main(window, menu):
         draw(window, background, bg_image, player, objects, offset_x, offset_y)
        
     quit()
-
-
 
 if __name__ == "__main__":
     main(settings.window, menu)
