@@ -65,13 +65,47 @@ def main(window, menu):
             if cell == 'P':
                 player = Player(x* block_size, y* block_size, 50, 50)
 
-            if cell == 'x':
-                block = Block(x* block_size, y* block_size, 200, 120, "Block")
+            if cell == 'r':
+                block = Block(x* block_size, y* block_size, 200, 120, "BlockRight")
+                blocks.append(block)
+            if cell == 'l':
+                block = Block(x* block_size, y* block_size, 200, 120, "BlockLeft")
+                blocks.append(block)
+            if cell == 'd':
+                block = Block(x* block_size, y* block_size, 200, 120, "BlockDown")
+                blocks.append(block)
+            if cell == 'u':
+                block = Block(x* block_size, y* block_size, 200, 120, "BlockUp")
+                blocks.append(block)
+                
+            if cell == 'R':
+                block = Block(x* block_size, y* block_size, 200, 120, "CurveRight")
+                blocks.append(block)
+            if cell == 'L':
+                block = Block(x* block_size, y* block_size, 200, 120, "CurveLeft")
+                blocks.append(block)
+            if cell == 'D':
+                block = Block(x* block_size, y* block_size, 200, 120, "CurveDown")
+                blocks.append(block)
+            if cell == 'U':
+                block = Block(x* block_size, y* block_size, 200, 120, "CurveUp")
                 blocks.append(block)
 
-            
+            if cell == 'i':
+                block = Block(x* block_size, y* block_size, 200, 120, "CRight")
+                blocks.append(block)
+            if cell == 'e':
+                block = Block(x* block_size, y* block_size, 200, 120, "CLeft")
+                blocks.append(block)
+            if cell == 'o':
+                block = Block(x* block_size, y* block_size, 200, 120, "CDown")
+                blocks.append(block)
+            if cell == 't':
+                block = Block(x* block_size, y* block_size, 200, 120, "CUp")
+                blocks.append(block)
+           
             if cell == '#':
-                tree = Block(x* block_size, y* block_size,200, 120, "BlockGlass")
+                tree = Block(x* block_size, y* block_size,200, 120, "CurveGlass")
                 blocks.append(tree)
                 
             if cell == 'f':
