@@ -34,6 +34,7 @@ def load_sprite_sheets(dir1, dir2, width, height, direction=False):
             all_sprites[image.replace(".png", "") + "_down"] = sprites
             all_sprites[image.replace(".png", "") + "_up"] = flip(sprites)   
             all_sprites[image.replace(".png", "") + "_idle"] = sprites
+            all_sprites[image.replace(".png", "") + "_hit"] = flip(sprites)
         else:
             all_sprites[image.replace(".png", "")] = sprites
 

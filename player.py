@@ -7,9 +7,10 @@ from load_sprite import load_sprite_sheets
 class Player(pygame.sprite.Sprite):
     COLOR = (255, 0, 0)
     GRAVITY = 1
-    SPRITES = load_sprite_sheets("MainCharacters", "MaskDude", 40, 48, True)
-    ANIMATION_DELAY = 5
+    SPRITES = load_sprite_sheets("MainCharacters", "MaskDude", 35, 35, True)
+    ANIMATION_DELAY = 4
     SPEED = 5
+    LIFE = 100
 
     def __init__(self, x, y, width, height):
         super().__init__()
@@ -44,6 +45,7 @@ class Player(pygame.sprite.Sprite):
 
     def make_hit(self):
         self.hit = True
+        self.LIFE -= 1
         
     def hit_head(self):
         self.count = 0
@@ -79,7 +81,9 @@ class Player(pygame.sprite.Sprite):
                 if self.y_vel < 2 and not self.land and self.rect.bottom != obj.rect.top:
                     self.rect.top = obj.rect.bottom 
                     self.hit_head()
-            
+            elif pygame.sprite.collide_mask(self, obj) and obj.name == "fire":
+                self.make_hit()
+
         return collided_objects
     
     
@@ -134,14 +138,8 @@ class Player(pygame.sprite.Sprite):
             self.jump()
 
 
-        vertical_collide = self.handle_vertical_collision(objects, self.y_vel)
-        to_check = [collide_left, collide_right, *vertical_collide]
-
-
-        for obj in to_check:
-            if obj and obj.name == "fire":
-                self.make_hit()
-
+        self.handle_vertical_collision(objects, self.y_vel)
+    
         self.loop()
 
     def loop(self):
@@ -159,7 +157,9 @@ class Player(pygame.sprite.Sprite):
 
     def update_sprite(self):
         self.sprite_sheet = "idle"
-        if self.hit:
+        if self.LIFE <= 0:
+            self.sprite_sheet = "dead"
+        elif self.hit:
             self.sprite_sheet = "hit"
         elif self.y_vel < 0:
             if self.jump_count == 1:

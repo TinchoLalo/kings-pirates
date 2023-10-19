@@ -32,7 +32,7 @@ def draw(window, background, bg_image, player, objects, points,offset_x, offset_
         point.draw(window,offset_x, offset_y) 
    
 
-    Text("MOAIS", settings.WIDTH//2, 80)
+    Text(str(player.LIFE), settings.WIDTH//2, 80)
 
     player.draw(window, offset_x, offset_y)
 
@@ -78,8 +78,8 @@ def main(window, menu):
                 blocks.append(tree)
                 
             if cell == 'f':
-                fire = Fire(x*block_size+30, y*block_size+32, 16, 32)
-                fires.append(Fire(x*block_size+30, y*block_size+32, 16, 32))
+                fire = Fire(x*block_size, y*block_size-50, 70, 35)
+                fires.append(fire)
  
     
     objects = [*blocks, *fires]
