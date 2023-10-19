@@ -44,7 +44,7 @@ def main(window, menu):
     clock = pygame.time.Clock()
     background, bg_image = get_background("Blue.png")
     menu.start()
-    block_size = 20
+    block_size = 120
     
     blocks = []
     fires = []
@@ -66,15 +66,12 @@ def main(window, menu):
                 player = Player(x* block_size, y* block_size, 50, 50)
 
             if cell == 'x':
-                block = Block(x* block_size, y* block_size, block_size)
+                block = Block(x* block_size, y* block_size, 200, 120, "Block")
                 blocks.append(block)
 
-            if cell == '.':
-                point = Block(x* block_size, y* block_size, 5, "point", "#f9f9f9")
-                points.append(point)
-
+            
             if cell == '#':
-                tree = Block(x* block_size, y* block_size, block_size, "tree")
+                tree = Block(x* block_size, y* block_size,200, 120, "BlockGlass")
                 blocks.append(tree)
                 
             if cell == 'f':
@@ -88,7 +85,7 @@ def main(window, menu):
 
     offset_x = 0
     offset_y = 0
-    scroll_area_width = 200
+    scroll_area_width = 400
     scroll_area_height = 200
     init = False
     
@@ -115,8 +112,6 @@ def main(window, menu):
         for i in fires:
             i.loop()
 
-        for i in blocks:
-            i.loop(player,window, offset_x, offset_y)
       
         
         if init == True:

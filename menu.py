@@ -32,7 +32,7 @@ class Menu():
         clock = pygame.time.Clock()
         background, bg_image = get_background("Blue.png")
        
-        block_size = 20
+        block_size = 100
         
         blocks = []
         fires = []
@@ -54,12 +54,9 @@ class Menu():
                 if cell == 'P':
                     player = Player(x* block_size, y* block_size, 50, 50)
                 if cell == 'X':
-                    block = Block(x* block_size, y* block_size, block_size)
+                    block = Block(x* block_size, y* block_size, block_size, 70)
                     blocks.append(block)
 
-                if cell == '.':
-                    point = Block(x* block_size, y* block_size, 5, "point", "#f9f9f9")
-                    points.append(point)
                 
                 if cell == 'f':
                     fire = Fire(x*block_size+30, y*block_size+32, 16, 32)
