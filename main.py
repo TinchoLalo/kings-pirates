@@ -7,17 +7,19 @@ import pygame
 import settings
 from menu import Menu
 from text import Text
+from create_map import create_map, blocks, enemies, lands
+from enemies import bullets
+
 from player import Player
 from background import get_background
-from objects import Block
-from enemies import Fire
+
 
 
 
 # INIT PYGAME
 pygame.init()
 
-pygame.display.set_caption("MOAIS") 
+pygame.display.set_caption("KINGS AND PIRATES") 
 menu = Menu()
 
 # DRAW IN SCREEN
@@ -28,13 +30,14 @@ def draw(window, background, bg_image, player, objects, points,offset_x, offset_
     for obj in objects:
         obj.draw(window, offset_x, offset_y)
 
+    player.draw(window, offset_x, offset_y)
+    for b in bullets:
+        b.draw(window, offset_x, offset_y)
+
     for point in points:
         point.draw(window,offset_x, offset_y) 
-   
 
-    Text(str(player.LIFE), settings.WIDTH//2, 80)
-
-    player.draw(window, offset_x, offset_y)
+    
 
     pygame.display.update()
 
@@ -42,13 +45,10 @@ def draw(window, background, bg_image, player, objects, points,offset_x, offset_
 
 def main(window, menu):
     clock = pygame.time.Clock()
-    background, bg_image = get_background("Blue.png")
+    background, bg_image = get_background("Yellow.png")
     menu.start()
-    block_size = 120
+    block_size = 128
     
-    blocks = []
-    fires = []
-    points = []
 
     # CREATE MAP
 
@@ -63,59 +63,14 @@ def main(window, menu):
     
 
             if cell == 'P':
-                player = Player(x* block_size, y* block_size, 50, 50)
-
-            if cell == 'r':
-                block = Block(x* block_size, y* block_size, 200, 120, "BlockRight")
-                blocks.append(block)
-            if cell == 'l':
-                block = Block(x* block_size, y* block_size, 200, 120, "BlockLeft")
-                blocks.append(block)
-            if cell == 'd':
-                block = Block(x* block_size, y* block_size, 200, 120, "BlockDown")
-                blocks.append(block)
-            if cell == 'u':
-                block = Block(x* block_size, y* block_size, 200, 120, "BlockUp")
-                blocks.append(block)
-                
-            if cell == 'R':
-                block = Block(x* block_size, y* block_size, 200, 120, "CurveRight")
-                blocks.append(block)
-            if cell == 'L':
-                block = Block(x* block_size, y* block_size, 200, 120, "CurveLeft")
-                blocks.append(block)
-            if cell == 'D':
-                block = Block(x* block_size, y* block_size, 200, 120, "CurveDown")
-                blocks.append(block)
-            if cell == 'U':
-                block = Block(x* block_size, y* block_size, 200, 120, "CurveUp")
-                blocks.append(block)
-
-            if cell == 'i':
-                block = Block(x* block_size, y* block_size, 200, 120, "CRight")
-                blocks.append(block)
-            if cell == 'e':
-                block = Block(x* block_size, y* block_size, 200, 120, "CLeft")
-                blocks.append(block)
-            if cell == 'o':
-                block = Block(x* block_size, y* block_size, 200, 120, "CDown")
-                blocks.append(block)
-            if cell == 't':
-                block = Block(x* block_size, y* block_size, 200, 120, "CUp")
-                blocks.append(block)
-           
-            if cell == '#':
-                tree = Block(x* block_size, y* block_size,200, 120, "CurveGlass")
-                blocks.append(tree)
-                
-            if cell == 'f':
-                fire = Fire(x*block_size, y*block_size-50, 70, 35)
-                fires.append(fire)
- 
+                player = Player(x* block_size, y* block_size, 90, 58)
+            else:
+                # llamamos a la función crear mapa y le pasamos la celda para crear el objeto correspondiente
+                create_map(cell, x, y)
     
-    objects = [*blocks, *fires]
-    for i in fires:
-        i.on()
+    
+    objects = [*blocks, *bullets]
+    points = [*enemies, *lands]
 
     offset_x = 0
     offset_y = 0
@@ -128,7 +83,7 @@ def main(window, menu):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                run = False
+                menu.run = False
                 break
 
             if event.type == pygame.KEYDOWN:
@@ -141,12 +96,13 @@ def main(window, menu):
                 joy = pygame.joystick.Joystick(event.device_index)
                 settings.joysticks.append(joy)
 
-        player.handle_move(objects)
+        player.handle_move(objects, enemies)
         
-        for i in fires:
-            i.loop()
-
-      
+        for i in enemies:
+            i.loop(player, objects)
+            
+        for i in bullets: 
+            i.update(player, objects)
         
         if init == True:
             offset_x = player.rect.centerx - (settings.WIDTH // 2)

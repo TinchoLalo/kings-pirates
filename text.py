@@ -27,7 +27,12 @@ class Text():
 class Button(Text):
     def __init__(self, text="", x=0, y=0, color="white", size=20, font='freesansbold.ttf', button_color=(0, 255, 0)):
         super().__init__(text, x, y, color, size, font)
+        self.image = pygame.image.load("assets/Menu/Buttons/button.png")
+        self.image = pygame.transform.scale(self.image, (180, 80))
+        self.rect = self.image.get_rect()
+        self.rect.center = (x-90, y-40)
         self.button_color = button_color
 
     def draw(self):
+        settings.window.blit(self.image, self.rect.center)
         self.print()
