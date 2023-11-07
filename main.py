@@ -4,14 +4,14 @@ import math
 import pygame
 
 # SCRIPTS
-import settings
-from menu import Menu
-from text import Text
-from create_map import create_map, blocks, enemies, lands
-from enemies import bullets
+import scripts.settings as settings
+from scripts.menu import Menu
+from scripts.text import Text
+from scripts.create_map import create_map, blocks, enemies, lands, back_tree, tree, decorations
+from scripts.enemies import bullets
 
-from player import Player
-from background import get_background
+from scripts.player import Player
+from scripts.background import get_background
 
 
 
@@ -26,6 +26,9 @@ menu = Menu()
 def draw(window, background, bg_image, player, objects, points,offset_x, offset_y):
     for tile in background:
         window.blit(bg_image, tile)
+
+    for tree in back_tree: 
+        tree.draw(window,offset_x, offset_y) 
 
     for obj in objects:
         obj.draw(window, offset_x, offset_y)
@@ -69,8 +72,8 @@ def main(window, menu):
                 create_map(cell, x, y)
     
     
-    objects = [*blocks, *bullets]
-    points = [*enemies, *lands]
+    objects = [*blocks, *bullets, *decorations]
+    points = [*enemies, *lands, *tree]
 
     offset_x = 0
     offset_y = 0
@@ -100,9 +103,17 @@ def main(window, menu):
         
         for i in enemies:
             i.loop(player, objects)
+
+        for i in tree:
+            i.loop()
+
+        for i in back_tree:
+            i.loop()
             
         for i in bullets: 
             i.update(player, objects)
+
+      
         
         if init == True:
             offset_x = player.rect.centerx - (settings.WIDTH // 2)
