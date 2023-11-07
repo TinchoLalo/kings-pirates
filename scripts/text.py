@@ -13,7 +13,10 @@ class Text():
         self.textRect.center = (self.x, self.y)
         self.on = True
         self.print()
-    
+        
+    def set_text(self, text):
+        self.text = self.font.render(text, True, self.color)
+        
     def print(self): 
         if self.on:   
             settings.window.blit(self.text, self.textRect)
@@ -27,7 +30,7 @@ class Text():
 class Button(Text):
     def __init__(self, text="", x=0, y=0, color="white", size=20, font='freesansbold.ttf', button_color=(0, 255, 0)):
         super().__init__(text, x, y, color, size, font)
-        self.image = pygame.image.load("assets/Menu/Buttons/button.png")
+        self.image = pygame.image.load("assets/button.png")
         self.image = pygame.transform.scale(self.image, (180, 80))
         self.rect = self.image.get_rect()
         self.rect.center = (x-90, y-40)

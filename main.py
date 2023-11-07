@@ -39,6 +39,8 @@ def draw(window, background, bg_image, player, objects, points,offset_x, offset_
 
     for point in points:
         point.draw(window,offset_x, offset_y) 
+    
+    settings.score_Text.print()
 
     
 
@@ -56,7 +58,7 @@ def main(window, menu):
     # CREATE MAP
 
     # Leer el archivo de texto
-    with open("levels/level1.txt", "r") as file:
+    with open("levels/level"+ settings.current_level+".txt", "r") as file:
         level_map = file.readlines()
 
     for row_index, row in enumerate(level_map):
@@ -74,6 +76,7 @@ def main(window, menu):
     
     objects = [*blocks, *bullets, *decorations]
     points = [*enemies, *lands, *tree]
+    
 
     offset_x = 0
     offset_y = 0

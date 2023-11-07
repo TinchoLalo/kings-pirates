@@ -1,4 +1,5 @@
 import pygame
+import time
 import scripts.settings as settings
 from scripts.load_sprite import load_sprite_sheets
 
@@ -92,6 +93,7 @@ class Player(pygame.sprite.Sprite):
                     self.hit_head()
 
                 elif pygame.sprite.collide_mask(self, obj) and self.attack and obj.name == "Barrel":
+                    settings.set_data(settings.current_level, int(settings.score)+1)
                     objects.remove(obj)
                 elif pygame.sprite.collide_mask(self, obj) and self.attack and obj.name == "Botle":
                     objects.remove(obj)
@@ -100,6 +102,9 @@ class Player(pygame.sprite.Sprite):
                     objects.remove(obj)
                 elif pygame.sprite.collide_mask(self, obj) and obj.name == "Chestc" and self.key:
                     obj.update_name("Chesto")
+                    #time.sleep(5)
+                    settings.set_data(int(settings.current_level)+1, settings.score)
+                    
 
             elif pygame.sprite.collide_mask(self, obj) and obj.name == "Spike":
                 self.make_hit(10)
@@ -122,7 +127,8 @@ class Player(pygame.sprite.Sprite):
                 collided_object = obj
                 break
             elif pygame.sprite.collide_mask(self, obj) and self.attack and obj.name == "Barrel":
-                    objects.remove(obj)
+                settings.set_data(settings.current_level, int(settings.score)+1)
+                objects.remove(obj)
 
             elif pygame.sprite.collide_mask(self, obj) and obj.name == "Spike":
                 self.make_hit(10)
@@ -132,6 +138,9 @@ class Player(pygame.sprite.Sprite):
                 objects.remove(obj)
             elif pygame.sprite.collide_mask(self, obj) and obj.name == "Chestc" and self.key:
                 obj.update_name("Chesto")
+                #time.sleep(5)
+                settings.set_data(int(settings.current_level)+1, settings.score)
+                
 
         for e in enemies:
             if pygame.sprite.collide_mask(self, e) and not self.attack and e.LIFE > 0 and e.name != "Seashell":

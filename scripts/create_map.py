@@ -43,7 +43,7 @@ def create_map(cell, x, y):
     if cell == 'U': blocks.append(Block(x* block_size, y* block_size, block_size, block_size,[148,80], "Block"))
     if cell == 'I': blocks.append(Block(x* block_size, y* block_size, block_size, block_size,[222,80], "Block"))
     if cell == 'O': blocks.append(Block(x* block_size, y* block_size, block_size, block_size,[296,80], "Block"))
-    if cell == 'P': blocks.append(Block(x* block_size, y* block_size, block_size, block_size,[370,80], "Block"))
+    if cell == 'M': blocks.append(Block(x* block_size, y* block_size, block_size, block_size,[370,80], "Block"))
     if cell == 'w': blocks.append(Block(x* block_size, y* block_size, block_size, block_size,[444,80], "Block"))
     if cell == 'q': blocks.append(Block(x* block_size, y* block_size, block_size, block_size,[518,80], "Block"))
     if cell == 'e': blocks.append(Block(x* block_size, y* block_size, block_size, block_size,[592,80], "Block"))
@@ -83,7 +83,7 @@ def create_map(cell, x, y):
         enemies.append(Enemies(x*block_size, y*block_size+61, 70, 35, "Crabby",200, 0))
 
     if cell == '2':
-        enemies.append(Enemies(x*block_size, y*block_size+61, 50, 35, "FierceTooth", 150, 70, False))
+        enemies.append(Enemies(x*block_size, y*block_size+10, 50, 35, "FierceTooth", 150, 300, False))
 
     if cell == '3':
         enemies.append(Enemies(x*block_size, y*block_size+61, 50, 35, "PinkStar", 220, 0, True, False))

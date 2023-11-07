@@ -60,7 +60,7 @@ class Enemies(Object):
             self.direction = "left" if self.direction == "right" else "right"  # Invierte la dirección
             self.move_count = 0
         self.rect.x = self.rect.x - 1 if self.direction == "right" else self.rect.x + 1  # Mueve al enemigo en la dirección actual
-        self.move_count += 1 
+        self.move_count += 3 
     
     def attack(self,pos):
         if pos > self.rect.x:
@@ -92,7 +92,11 @@ class Enemies(Object):
         else: self.sprite_sheet = "idle" if self.move_distance <= 0 else "run"
 
         if self.move_distance > 0 and self.LIFE > 0:
-            self.move()
+            if abs(player.rect.x - self.rect.x) <= self.near_distance and self.LIFE > 0: 
+                self.attack(player.rect.x)
+                self.direction = "left" if player.direction == "right" else "right"
+            else:
+             self.move()
         else: 
             if abs(player.rect.x - self.rect.x) <= self.near_distance and self.LIFE > 0 and not self.shooter:
                 self.direction = "right" if player.direction == "right" else "left"
@@ -101,7 +105,7 @@ class Enemies(Object):
         for obj in objects:
             if pygame.sprite.collide_mask(self, obj):
                 if self.y_vel > 0:
-                    self.rect.bottom = obj.rect.top
+                    self.rect.bottom = obj.rect.top - 10 if self.move_distance > 0 else obj.rect.top
                     self.land = True
                     self.fall_count = 0
                   
