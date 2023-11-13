@@ -40,6 +40,7 @@ def draw(window, background, bg_image, player, objects, points,offset_x, offset_
     for point in points:
         point.draw(window,offset_x, offset_y) 
     
+    window.blit(settings.barrel, settings.barrel_rect)
     settings.score_Text.print()
 
     
@@ -54,10 +55,14 @@ def main(window, menu):
     menu.start()
     block_size = 128
     
+    # music
+    music = pygame.mixer.Sound('sounds/Pirates.mp3') 
+    # play music on loop
+    music.play(-1)
 
     # CREATE MAP
 
-    # Leer el archivo de texto
+    # Read the text file
     with open("levels/level"+ settings.current_level+".txt", "r") as file:
         level_map = file.readlines()
 
@@ -90,11 +95,13 @@ def main(window, menu):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 menu.run = False
+                music.stop()
                 break
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     menu.run = False
+                    music.stop()
                     break
             
             # Joystick

@@ -4,7 +4,7 @@ from scripts.text import Text
 pygame.init()
 pygame.joystick.init()
 
-pygame.display.set_caption("Correr o Morir")
+pygame.display.set_caption("Kings & Pirates")
 
 screen_info = pygame.display.Info()
 HEIGHT = screen_info.current_h
@@ -37,4 +37,10 @@ def set_data(level, score):
 lines = get_data()
 current_level = lines[0]
 score = lines[1]
-score_Text = Text("Barrels: "+ score, 100, 30 , "white", 20)
+
+barrel = pygame.image.load("assets/Decorations/barrel.png")
+barrel = pygame.transform.scale(barrel, (30,30))
+barrel_rect = barrel.get_rect()
+barrel_rect.topleft = (70, 30)
+
+score_Text = Text(score, 124, 43 , "white", 30)

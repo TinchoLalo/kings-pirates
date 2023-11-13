@@ -20,10 +20,17 @@ class Menu():
         
     def start(self):
         clock = pygame.time.Clock()
-        #background, bg_image = get_background("background.png")
+        # bakcground
         image = pygame.image.load("assets/Background/background.png")
         background = pygame.transform.scale(image, (settings.WIDTH, settings.HEIGHT))
-       
+
+        # music
+        music = pygame.mixer.Sound('sounds/Pirate Tavern.mp3') 
+        # play music on loop
+        music.play(-1)
+
+
+        # buttons
         buttons = []
         
         start_button = Button("EMPEZAR", settings.WIDTH//2, (settings.HEIGHT//3) + 150, "white", 30)
@@ -39,21 +46,22 @@ class Menu():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.run = False
+                    music.stop()
                     break
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         self.run = False
+                        music.stop()
                         quit()
-                        break
 
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if start_button.textRect.collidepoint(event.pos):
                         self.run = True
-                    if start_button.textRect.collidepoint(event.pos):
-                        self.run = True
+                        music.stop()
                     if exit_button.textRect.collidepoint(event.pos):
                         self.run = False
+                        music.stop()
                         quit()
 
                 # Joystick
@@ -65,10 +73,14 @@ class Menu():
             keys = pygame.key.get_pressed()
             for joystick in settings.joysticks:
                 if joystick.get_button(0): 
+                    music.stop()
                     self.run = True
                     
+                    
             if keys[pygame.K_SPACE]: 
+                music.stop()
                 self.run = True
+                
              
                  
 
