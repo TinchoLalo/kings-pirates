@@ -55,6 +55,7 @@ class Enemies(Object):
         self.shot_delay = shot_delay 
         self.ANIMATION_DELAY = ANIMATION_DELAY
 
+    # Mover de lado a lado
     def move(self):
         if self.move_count >= self.move_distance:
             self.direction = "left" if self.direction == "right" else "right"  # Invierte la dirección
@@ -62,6 +63,7 @@ class Enemies(Object):
         self.rect.x = self.rect.x - 1 if self.direction == "right" else self.rect.x + 1  # Mueve al enemigo en la dirección actual
         self.move_count += 3 
     
+    # Atacar perseguir
     def attack(self,pos):
         if pos > self.rect.x:
             self.rect.x += 2.5
@@ -69,17 +71,21 @@ class Enemies(Object):
         else: 
             self.rect.x -= 2.5
             self.direction = "left" 
-    
+    # Disparar
     def shoot(self, dir):
         new_bullet = Bullet(self.x+30, self.y+40, "Bullet",10, dir)
         bullets.append(new_bullet)
 
-
+    # BUCLE
     def loop(self, player, objects):
+        # Muerte
         if self.LIFE <= 0:
             self.sprite_sheet = "dead"
+
+        # Daño recivido
         elif pygame.sprite.collide_mask(self, player) and player.attack:
             self.sprite_sheet = "hit"
+        # Atacar si el jugador esta cerca
         elif abs(player.rect.x - self.rect.x) <= self.near_distance and abs(player.rect.y - self.rect.y) <= self.near_distance:
             self.sprite_sheet = "attack"
             if self.move_attack: self.attack(player.rect.x)
@@ -91,21 +97,22 @@ class Enemies(Object):
 
         else: self.sprite_sheet = "idle" if self.move_distance <= 0 else "run"
 
+        # Movimiento de lado a lado
         if self.move_distance > 0 and self.LIFE > 0:
             if abs(player.rect.x - self.rect.x) <= self.near_distance and self.LIFE > 0: 
                 self.attack(player.rect.x)
-                self.direction = "left" if player.direction == "right" else "right"
+                self.direction = "left" if player.rect.x >self.rect.x else "right"
             else:
              self.move()
         else: 
             if abs(player.rect.x - self.rect.x) <= self.near_distance and self.LIFE > 0 and not self.shooter:
-                self.direction = "right" if player.direction == "right" else "left"
+                self.direction = "right" if player.rect.x < self.rect.x else "left"
 
-        # COLLISION GRAVITY
+        # COLISION GRAVEDAD
         for obj in objects:
             if pygame.sprite.collide_mask(self, obj):
                 if self.y_vel > 0:
-                    self.rect.bottom = obj.rect.top - 10 if self.move_distance > 0 else obj.rect.top
+                    self.rect.bottom = obj.rect.top - 20 if self.move_distance > 0 else obj.rect.top
                     self.land = True
                     self.fall_count = 0
                   

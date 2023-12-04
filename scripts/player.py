@@ -11,7 +11,8 @@ class Player(pygame.sprite.Sprite):
     SPRITES = load_sprite_sheets("MainCharacters", "King", 90, 58, True)
     ANIMATION_DELAY = 4
     SPEED = 5
-    LIFE = 100
+    LIFE = 5
+    NEXT_LEVEL = False
 
     def __init__(self, x, y, width, height):
         super().__init__()
@@ -34,8 +35,11 @@ class Player(pygame.sprite.Sprite):
         self.pos = 0
         self.key = False
         self.message = ""
+        self.win = False
+        self.win_count = 0
         self.update_sprite()
 
+    # SALTAR
     def jump(self):
         self.land = False
         self.y_vel = -self.GRAVITY * 4.4
@@ -44,6 +48,7 @@ class Player(pygame.sprite.Sprite):
         if self.jump_count == 1:
             self.fall_count = 0
 
+    # MOVERSE
     def move(self, dx, dy):
         self.rect.x += dx
         self.rect.y += dy if self.dead != True else 0
@@ -51,34 +56,41 @@ class Player(pygame.sprite.Sprite):
             self.rect.y += 10
             self.dead = True
 
+    # RECIVIR DAÑO
     def make_hit(self, damage):
+        if self.hit == False:
+            self.LIFE -= damage
+            life = self.LIFE if self.LIFE >= 0 else 0
+            settings.set_data(int(settings.current_level), settings.score, life)
         self.hit = True
-        self.LIFE -= damage
-        
+
     def hit_head(self):
         self.count = 0
         self.y_vel *= -1
 
+    # MOVERSE A LA IZQUIERDA
     def move_left(self, vel):
         self.x_vel = -vel
         if self.direction != "left":
             self.direction = "left"
             self.animation_count = 1
 
+    # MOVERSE A LA DERECHA
     def move_right(self, vel):
         self.x_vel = vel
         if self.direction != "right":
             self.direction = "right"
             self.animation_count = 1
     
+    # TOCAR TIERRA
     def landed(self):
         self.fall_count = 0
         self.y_vel = 0
         self.jump_count = 0
         self.land = True
         
-    
-    def handle_vertical_collision(self, objects,enemies):
+    # COLISIONES VERTICALES
+    def handle_vertical_collision(self, objects,enemies, lands):
         collided_objects = []
        
         for obj in objects:
@@ -92,90 +104,104 @@ class Player(pygame.sprite.Sprite):
                     self.rect.top = obj.rect.bottom 
                     self.hit_head()
 
+                # Barriles
                 elif pygame.sprite.collide_mask(self, obj) and self.attack and obj.name == "Barrel":
-                    settings.set_data(settings.current_level, int(settings.score)+1)
+                    settings.set_data(settings.current_level, int(settings.score)+1, self.LIFE)
                     objects.remove(obj)
+                # Botella
                 elif pygame.sprite.collide_mask(self, obj) and self.attack and obj.name == "Botle":
                     objects.remove(obj)
+                # Llave
                 elif pygame.sprite.collide_mask(self, obj) and obj.name == "Key":
                     self.key = True
                     objects.remove(obj)
+                # Cofre
                 elif pygame.sprite.collide_mask(self, obj) and obj.name == "Chestc" and self.key:
                     obj.update_name("Chesto")
-                    #time.sleep(5)
-                    settings.set_data(int(settings.current_level)+1, settings.score)
-                    
-
+                    self.win = True
+                    settings.set_data(int(settings.current_level)+1, settings.score, self.LIFE)
+                
+            # Pinches
             elif pygame.sprite.collide_mask(self, obj) and obj.name == "Spike":
-                self.make_hit(10)
-
+                self.make_hit(1)
+        # Enemigos
         for e in enemies:
             if pygame.sprite.collide_mask(self, e) and not self.attack and e.LIFE > 0 and e.name != "Seashell":
-                self.make_hit(10)
+                self.make_hit(1)
             elif pygame.sprite.collide_mask(self, e) and self.attack:
                 e.LIFE -= 10
+        # lava
+        for e in lands:
+            if pygame.sprite.collide_mask(self, e) and e.name != "Water":
+                self.make_hit(1)
             
 
         return collided_objects
     
-    
-    def collide(self, objects, dx, enemies):
+    # COLISIONES LATERALES
+    def collide(self, objects, dx, enemies, lands):
         self.move(dx, self.y_vel/2)
         collided_object = None
         for obj in objects:
             if pygame.sprite.collide_mask(self, obj) and obj.name != "Botle" and obj.name != "Spike" and obj.name != "Key" and obj.name != "Chesto" and obj.name != "Chestc":
                 collided_object = obj
                 break
+            # Barriles
             elif pygame.sprite.collide_mask(self, obj) and self.attack and obj.name == "Barrel":
-                settings.set_data(settings.current_level, int(settings.score)+1)
+                settings.set_data(settings.current_level, int(settings.score)+1, self.LIFE)
                 objects.remove(obj)
-
+            # Pinches
             elif pygame.sprite.collide_mask(self, obj) and obj.name == "Spike":
-                self.make_hit(10)
-            
+                self.make_hit(1)
+            # Llave
             elif pygame.sprite.collide_mask(self, obj) and obj.name == "Key":
                 self.key = True
                 objects.remove(obj)
+            # Cofre
             elif pygame.sprite.collide_mask(self, obj) and obj.name == "Chestc" and self.key:
                 obj.update_name("Chesto")
-                #time.sleep(5)
-                settings.set_data(int(settings.current_level)+1, settings.score)
-                
-
+                self.win = True
+                settings.set_data(int(settings.current_level)+1, settings.score, self.LIFE)
+        # enemigos
         for e in enemies:
             if pygame.sprite.collide_mask(self, e) and not self.attack and e.LIFE > 0 and e.name != "Seashell":
-                self.make_hit(10)
+                self.make_hit(1)
             elif pygame.sprite.collide_mask(self, e) and self.attack:
                 e.LIFE -= 10
+        # lava
+        for e in lands:
+            if pygame.sprite.collide_mask(self, e) and e.name != "Water":
+                self.make_hit(1)
 
         return collided_object
 
-    def handle_move(self, objects, enemies):
+    def handle_move(self, objects, enemies, lands):
         keys = pygame.key.get_pressed()
 
         self.x_vel = 0
-        collide_left = self.collide(objects, -self.SPEED * 2, enemies)
-        collide_right = self.collide(objects, self.SPEED * 2, enemies)
+        collide_left = self.collide(objects, -self.SPEED * 2, enemies, lands)
+        collide_right = self.collide(objects, self.SPEED * 2, enemies, lands)
         if self.LIFE > 0:
             # JOYSTICK
             for joystick in settings.joysticks:
                 axis_x = joystick.get_axis(0)
                 #axis_y = joystick.get_axis(1)
 
+                # Correr o Caminar
                 if joystick.get_button(5) and self.land:
-                    self.SPEED = 10
+                    self.SPEED = 15
                 else:
-                    self.SPEED = 5
-                
+                    self.SPEED = 8
+                # Atacar
                 if joystick.get_button(2):
                     self.attack = True
-                
+                # Moverse
                 if axis_x < -0.5 and not collide_left:
                     self.move_left(self.SPEED)
 
                 if axis_x > 0.5 and not collide_right:
                     self.move_right(self.SPEED)
-
+                # Saltar
                 if joystick.get_button(0) and self.jump_count < 1 and self.land:
                     self.jump()
             
@@ -194,18 +220,28 @@ class Player(pygame.sprite.Sprite):
                 self.jump()
 
         if not self.dead:
-            self.handle_vertical_collision(objects, enemies)
+            self.handle_vertical_collision(objects, enemies, lands)
         
         self.loop()
 
     def loop(self):
-        
+        # Gravedad
         self.y_vel += min(1, (self.fall_count / 60) * self.GRAVITY) 
         self.move(self.x_vel, self.y_vel)
+        
+        # Pasar de nivel
+        if self.win:
+            self.win_count += 1
+        if self.win_count > 30:
+            self.win = False
+            self.win_count = 0
+            
+            self.NEXT_LEVEL = True
 
+        # Contadores            
         if self.hit:
             self.hit_count += 1
-        if self.hit_count > 10:
+        if self.hit_count > 20:
             self.hit = False
             self.hit_count = 0
         if self.attack:
@@ -216,6 +252,7 @@ class Player(pygame.sprite.Sprite):
         self.fall_count += 1
         self.update_sprite()
 
+    # ANIMACIONES
     def update_sprite(self):
         self.sprite_sheet = "idle"
         if self.LIFE <= 0:
@@ -242,10 +279,11 @@ class Player(pygame.sprite.Sprite):
        
         self.animation_count += 1
         self.update()
-
+        
+    # ACTUALIZAR COLLIDER
     def update(self):
         self.rect = self.sprite.get_rect(topleft=(self.rect.x, self.rect.y))
         self.mask = pygame.mask.from_surface(self.sprite)
-
+    # DIBUJAR EN PANTALLA
     def draw(self, win, offset_x,offset_y):
         win.blit(self.sprite, (self.rect.x - offset_x, self.rect.y - offset_y))

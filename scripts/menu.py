@@ -17,6 +17,8 @@ def draw(window, buttons, background):
 class Menu():
     def __init__(self):
         self.run = False
+        # music
+        self.music = pygame.mixer.Sound('sounds/Pirate Tavern.mp3') 
         
     def start(self):
         clock = pygame.time.Clock()
@@ -24,10 +26,9 @@ class Menu():
         image = pygame.image.load("assets/Background/background.png")
         background = pygame.transform.scale(image, (settings.WIDTH, settings.HEIGHT))
 
-        # music
-        music = pygame.mixer.Sound('sounds/Pirate Tavern.mp3') 
+        
         # play music on loop
-        music.play(-1)
+        self.music.play(-1)
 
 
         # buttons
@@ -46,22 +47,22 @@ class Menu():
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.run = False
-                    music.stop()
+                    self.music.stop()
                     break
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         self.run = False
-                        music.stop()
+                        self.music.stop()
                         quit()
 
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if start_button.textRect.collidepoint(event.pos):
                         self.run = True
-                        music.stop()
+                        self.music.stop()
                     if exit_button.textRect.collidepoint(event.pos):
                         self.run = False
-                        music.stop()
+                        self.music.stop()
                         quit()
 
                 # Joystick
@@ -73,12 +74,12 @@ class Menu():
             keys = pygame.key.get_pressed()
             for joystick in settings.joysticks:
                 if joystick.get_button(0): 
-                    music.stop()
+                    self.music.stop()
                     self.run = True
                     
                     
             if keys[pygame.K_SPACE]: 
-                music.stop()
+                self.music.stop()
                 self.run = True
                 
              

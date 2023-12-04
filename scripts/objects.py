@@ -35,6 +35,7 @@ class Block(Object):
         self.block = get_block(width, height, pos, name)
         self.image.blit(self.block, (0, 0))
         self.mask = pygame.mask.from_surface(self.image)
+        self.name = name
         
 class Decoration(pygame.sprite.Sprite):
     def __init__(self, x, y, width, height, name=None):
