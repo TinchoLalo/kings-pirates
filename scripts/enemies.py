@@ -20,7 +20,7 @@ class Bullet(pygame.sprite.Sprite):
         self.rect.x += self.speed * self.direction
 
         if pygame.sprite.collide_mask(self, player) and not player.attack:
-            player.LIFE -= 100
+            player.LIFE -= 1
         elif pygame.sprite.collide_mask(self, player):
             bullets.remove(self)
 
@@ -112,7 +112,7 @@ class Enemies(Object):
         for obj in objects:
             if pygame.sprite.collide_mask(self, obj):
                 if self.y_vel > 0:
-                    self.rect.bottom = obj.rect.top - 20 if self.move_distance > 0 else obj.rect.top
+                    self.rect.bottom = obj.rect.top-10  if self.move_distance > 0 else obj.rect.top
                     self.land = True
                     self.fall_count = 0
                   

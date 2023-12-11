@@ -9,7 +9,7 @@ pygame.display.set_caption("Kings & Pirates")
 screen_info = pygame.display.Info()
 HEIGHT = screen_info.current_h
 WIDTH = screen_info.current_w
-FPS = 90
+FPS = 120
 PLAYER_VEL = 5
 
 
@@ -36,7 +36,10 @@ def set_data(level, score, life):
     score_Text.set_text(score)
     create_life(life)
   
-
+def getScore():
+    lines = get_data()
+    return int(lines[1])
+    
 # LEER DATOS
 lines = get_data()
 current_level = lines[0]

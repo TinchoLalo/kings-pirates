@@ -56,6 +56,13 @@ def draw(window, background, bg_image, player, objects, points,offset_x, offset_
 
     # Corazones
     settings.create_life(player.LIFE) # Life
+    
+    # Controles
+    if settings.current_level == "0":
+        control = pygame.image.load("assets/control.png")
+        control = pygame.transform.scale(control, (600,400))
+        control_width, control_height = control.get_size()
+        window.blit(control, ((settings.WIDTH - control_width -200) // 2 - offset_x, 200 - offset_y))
 
     # Perdiste Mensaje
     if player.LIFE <= 0:
@@ -161,6 +168,7 @@ def main(window, menu):
             if event.type == pygame.JOYDEVICEADDED:
                 joy = pygame.joystick.Joystick(event.device_index)
                 settings.joysticks.append(joy)
+                
 
         # actualizar movimiento del player
         player.handle_move(objects, scripts.create_map.enemies, scripts.create_map.lands)
@@ -181,8 +189,8 @@ def main(window, menu):
 
         # CAMARA
         if init == True:
-            offset_x = player.rect.centerx - (settings.WIDTH // 2)
-            offset_y = player.rect.centery - (settings.HEIGHT // 2)
+            offset_x = player.rect.centerx - (settings.WIDTH // 1)
+            offset_y = player.rect.centery 
             init = False
             
         if ((player.rect.right - offset_x >= settings.WIDTH - scroll_area_width) and player.x_vel > 0) or (

@@ -10,7 +10,7 @@ class Player(pygame.sprite.Sprite):
     GRAVITY = 1
     SPRITES = load_sprite_sheets("MainCharacters", "King", 90, 58, True)
     ANIMATION_DELAY = 4
-    SPEED = 5
+    SPEED = 20
     LIFE = 5
     NEXT_LEVEL = False
 
@@ -42,7 +42,7 @@ class Player(pygame.sprite.Sprite):
     # SALTAR
     def jump(self):
         self.land = False
-        self.y_vel = -self.GRAVITY * 4.4
+        self.y_vel = -self.GRAVITY * 6.5
         self.animation_count = 1
         self.jump_count = 1
         if self.jump_count == 1:
@@ -61,7 +61,7 @@ class Player(pygame.sprite.Sprite):
         if self.hit == False:
             self.LIFE -= damage
             life = self.LIFE if self.LIFE >= 0 else 0
-            settings.set_data(int(settings.current_level), settings.score, life)
+            
         self.hit = True
 
     def hit_head(self):
@@ -106,7 +106,7 @@ class Player(pygame.sprite.Sprite):
 
                 # Barriles
                 elif pygame.sprite.collide_mask(self, obj) and self.attack and obj.name == "Barrel":
-                    settings.set_data(settings.current_level, int(settings.score)+1, self.LIFE)
+                    settings.set_data(settings.current_level, settings.getScore()+1, self.LIFE)
                     objects.remove(obj)
                 # Botella
                 elif pygame.sprite.collide_mask(self, obj) and self.attack and obj.name == "Botle":
@@ -119,7 +119,7 @@ class Player(pygame.sprite.Sprite):
                 elif pygame.sprite.collide_mask(self, obj) and obj.name == "Chestc" and self.key:
                     obj.update_name("Chesto")
                     self.win = True
-                    settings.set_data(int(settings.current_level)+1, settings.score, self.LIFE)
+                    settings.set_data(int(settings.current_level)+1, settings.getScore(), self.LIFE)
                 
             # Pinches
             elif pygame.sprite.collide_mask(self, obj) and obj.name == "Spike":
@@ -148,7 +148,7 @@ class Player(pygame.sprite.Sprite):
                 break
             # Barriles
             elif pygame.sprite.collide_mask(self, obj) and self.attack and obj.name == "Barrel":
-                settings.set_data(settings.current_level, int(settings.score)+1, self.LIFE)
+                settings.set_data(settings.current_level,settings.getScore() +1, self.LIFE)
                 objects.remove(obj)
             # Pinches
             elif pygame.sprite.collide_mask(self, obj) and obj.name == "Spike":
@@ -161,7 +161,7 @@ class Player(pygame.sprite.Sprite):
             elif pygame.sprite.collide_mask(self, obj) and obj.name == "Chestc" and self.key:
                 obj.update_name("Chesto")
                 self.win = True
-                settings.set_data(int(settings.current_level)+1, settings.score, self.LIFE)
+                settings.set_data(int(settings.current_level)+1, settings.getScore(), self.LIFE)
         # enemigos
         for e in enemies:
             if pygame.sprite.collide_mask(self, e) and not self.attack and e.LIFE > 0 and e.name != "Seashell":
@@ -186,12 +186,12 @@ class Player(pygame.sprite.Sprite):
             for joystick in settings.joysticks:
                 axis_x = joystick.get_axis(0)
                 #axis_y = joystick.get_axis(1)
-
+               
                 # Correr o Caminar
-                if joystick.get_button(5) and self.land:
-                    self.SPEED = 15
+                if joystick.get_button(10) and self.land:
+                    self.SPEED = 25
                 else:
-                    self.SPEED = 8
+                    self.SPEED = 15
                 # Atacar
                 if joystick.get_button(2):
                     self.attack = True
@@ -207,16 +207,17 @@ class Player(pygame.sprite.Sprite):
             
             # TECLADO
             if keys[pygame.K_w] and self.land:
-                self.SPEED = 10
+                self.SPEED = 25
             else:
-                self.SPEED = 5
+                self.SPEED = 15
             if keys[pygame.K_a] and not collide_left:
                 self.move_left(self.SPEED)
 
             if keys[pygame.K_d] and not collide_right:
                 self.move_right(self.SPEED)
-
-            if keys[pygame.K_SPACE] and self.jump_count < 1 and self.land:
+            if keys[pygame.K_l]:
+                self.attack = True
+            if keys[pygame.K_SPACE] and self.land:
                 self.jump()
 
         if not self.dead:
@@ -226,7 +227,7 @@ class Player(pygame.sprite.Sprite):
 
     def loop(self):
         # Gravedad
-        self.y_vel += min(1, (self.fall_count / 60) * self.GRAVITY) 
+        self.y_vel += min(1, (self.fall_count /20) * self.GRAVITY) 
         self.move(self.x_vel, self.y_vel)
         
         # Pasar de nivel

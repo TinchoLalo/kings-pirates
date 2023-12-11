@@ -95,9 +95,9 @@ def create_map(cell, x, y):
 
     # TREES
     if cell == "b":
-        back_tree.append(Tree(x* block_size, y* block_size, 50, 64, "BackTree"))
+        back_tree.append(Tree(x* block_size-5, y* block_size, 50, 64, "BackTree"))
     if cell == "v":
-        tree.append(Tree(x* block_size, y* block_size -20, 50, 95, "FrontTree"))
+        tree.append(Tree(x* block_size-5, y* block_size -20, 50, 95, "FrontTree"))
 
 
     # OBJECTS
