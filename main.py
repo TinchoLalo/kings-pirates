@@ -1,3 +1,5 @@
+# MARTIN LA LOGGIA
+
 import os
 import random
 import math
@@ -22,7 +24,7 @@ from scripts.background import get_background
 # INICIALIZAR PYGAME
 pygame.init()
 
-pygame.display.set_caption("KINGS AND PIRATES") 
+pygame.display.set_caption("KINGS AND PIRATES por Martin La Loggia") 
 menu = Menu()
 
 

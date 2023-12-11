@@ -5,13 +5,14 @@ from scripts.player import Player
 #from background import get_background
 
 # DRAW IN SCREEN
-def draw(window, buttons, background):
+def draw(window, buttons, background, author):
    
     window.blit(background, (0, 0))
 
     for button in buttons:
         button.draw()
-
+    author.print()
+    
     pygame.display.update()
 
 class Menu():
@@ -38,6 +39,9 @@ class Menu():
         exit_button = Button("SALIR", settings.WIDTH//2, (settings.HEIGHT//3) + 260, "white", 30)
         buttons.append(start_button)
         buttons.append(exit_button)
+        
+        # Autor
+        author = Text("MARTIN LA LOGGIA", settings.WIDTH//2 , settings.HEIGHT-155, "white", 30)
         
         
 
@@ -86,6 +90,6 @@ class Menu():
                  
 
             # Llama a la función draw con la vista de la cámara actualizada
-            draw(settings.window, buttons, background)
+            draw(settings.window, buttons, background, author)
             
             pygame.display.update()
